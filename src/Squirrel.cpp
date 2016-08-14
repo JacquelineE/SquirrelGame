@@ -27,12 +27,17 @@ void Squirrel::action() {
 }
 
 
-void Squirrel::pick() {
-	nuts++;
-	std::cout << "you now have " << nuts << std::endl;
+void Squirrel::pick(Item & item) {
+	bag[item.get_name()]++;
 
 }
 
 void Squirrel::change_nr_nuts(int n) {
 	nuts +=n;
+}
+
+void Squirrel::print_bag() {
+	for (bagIterator = bag.begin(); bagIterator != bag.end(); bagIterator++) {
+	    std::cout << "Key: " << bagIterator->first << " Values:" << bagIterator ->second << std::endl;
+	}
 }

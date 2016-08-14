@@ -7,6 +7,8 @@
 
 #include "commandHandler.hpp"
 #include "eagle.hpp"
+#include "nut.hpp"
+#include "slingshot.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -78,11 +80,25 @@ void CommandHandler::attack_cmd(std::string & enemy) {
 
 }
 
+void CommandHandler::pick_cmd(std::string & item) {
+	std::cout << "will pick" << item << std::endl;
+	itItems = itemMap.find(item);
+
+	if(itItems != itemMap.end()) {
+	player -> pick((*(itItems -> second)));
+	} else {
+		std::cout << "Try pick something else!" << std::endl;
+	}
+
+}
+
 void CommandHandler::init_commandMap() {
 	//using member function pointers
 	//void(Controller::*mp)(std::istream &);
 	//cmd_pointer mp =
 	commandMap["attack"] = &CommandHandler::attack_cmd;
+	commandMap["tick"] = &CommandHandler::pick_cmd;
+	commandMap["bag"] = &CommandHandler::show_bag_cmd;
 
 	//void(Character::*mp2)();
 	//((*player).*mp2)();
@@ -91,6 +107,17 @@ void CommandHandler::init_commandMap() {
 	//((*player).*mp)();
 
 
+}
+
+
+void CommandHandler::show_bag_cmd(std::string & str) {
+	player->print_bag();
+}
+
+
+void CommandHandler::init_itemMap() {
+	itemMap["nut"] = new Nut();
+	itemMap["slingshot"] = new Slingshot();
 }
 
 void CommandHandler::init_actorMap() {

@@ -8,6 +8,7 @@
 #include "nut.hpp"
 
 Nut::Nut() {
+	name = "nut";
 	// TODO Auto-generated constructor stub
 
 }
