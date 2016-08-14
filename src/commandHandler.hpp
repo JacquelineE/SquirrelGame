@@ -39,7 +39,10 @@ private:
 	void read_input();
 	void init_commandMap();
 	void init_actorMap();
+	void init_itemMap();
 	void attack_cmd(std::string &);
+	void pick_cmd(std::string &);
+	void show_bag_cmd(std::string &);
 
 public:
 	CommandHandler();

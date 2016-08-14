@@ -17,6 +17,7 @@ CommandHandler::CommandHandler() {
 	player = new Squirrel();
 	init_commandMap();
 	init_actorMap();
+	init_itemMap();
 
 	// TODO Auto-generated constructor stub
 
@@ -97,7 +98,7 @@ void CommandHandler::init_commandMap() {
 	//void(Controller::*mp)(std::istream &);
 	//cmd_pointer mp =
 	commandMap["attack"] = &CommandHandler::attack_cmd;
-	commandMap["tick"] = &CommandHandler::pick_cmd;
+	commandMap["pick"] = &CommandHandler::pick_cmd;
 	commandMap["bag"] = &CommandHandler::show_bag_cmd;
 
 	//void(Character::*mp2)();

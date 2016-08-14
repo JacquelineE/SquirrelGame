@@ -8,10 +8,15 @@
 #ifndef ITEM_HPP_
 #define ITEM_HPP_
 
+#include <string>
 class Item {
+
+protected:
+	std::string name ="";
 public:
 	Item();
 	virtual ~Item();
+	std::string get_name();
 };
 
 #endif /* ITEM_HPP_ */

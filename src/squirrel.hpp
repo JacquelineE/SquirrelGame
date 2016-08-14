@@ -9,18 +9,24 @@
 #define SQUIRREL_HPP_
 
 #include "character.hpp"
+#include "item.hpp"
+#include <map>
 
 class Squirrel: public Character {
 
 private:
 	int nuts;
+	std::map<std::string, int> bag;
+	std::map<std::string, int>::const_iterator bagIterator;
+
 public:
 	Squirrel();
 	virtual ~Squirrel();
 	virtual void type() const;
 	virtual void action();
-	void pick();
+	void pick(Item &);
 	void change_nr_nuts(int n);
+	void print_bag();
 };
 
 #endif /* SQUIRREL_HPP_ */
