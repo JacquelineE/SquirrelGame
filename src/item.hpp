@@ -11,12 +11,10 @@
 #include <string>
 class Item {
 
-protected:
-	std::string name ="";
 public:
 	Item();
 	virtual ~Item();
-	std::string get_name();
+	virtual std::string get_name() = 0;
 };
 
 #endif /* ITEM_HPP_ */

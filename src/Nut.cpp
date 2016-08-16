@@ -8,12 +8,16 @@
 #include "nut.hpp"
 
 Nut::Nut() {
-	name = "nut";
+	nutName = "nut";
 	// TODO Auto-generated constructor stub
 
 }
 
 Nut::~Nut() {
 	// TODO Auto-generated destructor stub
+}
+
+std::string Nut::get_name() {
+	return nutName;
 }
 

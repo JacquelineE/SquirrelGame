@@ -17,3 +17,6 @@ Slingshot::~Slingshot() {
 	// TODO Auto-generated destructor stub
 }
 
+std::string Slingshot::get_name() {
+	return name;
+}

@@ -37,6 +37,7 @@ void Squirrel::change_nr_nuts(int n) {
 }
 
 void Squirrel::print_bag() {
+	std::cout << "YOUR BAG CONTENT" << std::endl;
 	for (bagIterator = bag.begin(); bagIterator != bag.end(); bagIterator++) {
 	    std::cout << "Item: " << bagIterator->first << " Quantity:" << bagIterator ->second << std::endl;
 	}

@@ -10,9 +10,14 @@
 
 #include "environment.hpp"
 class Forest : public Environment {
+
+private:
+
+
 public:
 	Forest();
 	virtual ~Forest();
+	virtual void pick_nut() = 0;
 
 };
 
