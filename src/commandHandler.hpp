@@ -12,23 +12,19 @@
 #include <functional>
 #include "item.hpp"
 #include "character.hpp"
-#include "classes.h"
 #include "squirrel.hpp"
 
-typedef void (CommandHandler::*cmd_pointer)(std::string &);
+//typedef void (CommandHandler::*cmd_pointer)(std::string &);
 
 class CommandHandler {
 
 private:
 
-	std::map<std::string,cmd_pointer>::iterator itCmdPtr;
 	std::map<std::string,Character*>::iterator itActors;
 	std::map<std::string,Item*>::iterator itItems;
 
 	Squirrel * player;
 
-	std::map<std::string, cmd_pointer> commandMap;
-	//std::map<std::string, std::function<void(Controller&)>> commandMap;
 	std::map<std::string, Character*> actorMap;
 	std::map<std::string, Item*> itemMap;
 
