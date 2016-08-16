@@ -16,6 +16,4 @@ Item::~Item() {
 	// TODO Auto-generated destructor stub
 }
 
-std::string Item::get_name() {
-	return name;
-}
+

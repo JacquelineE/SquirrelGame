@@ -8,7 +8,6 @@
 #include "forest.hpp"
 
 Forest::Forest() {
-	locationName = "forest";
 
 }
 
