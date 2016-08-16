@@ -7,6 +7,7 @@
 
 #include "commandHandler.hpp"
 #include "eagle.hpp"
+
 #include <iostream>
 #include <sstream>
 
@@ -80,6 +81,3 @@ void CommandHandler::print_intro() {
 void CommandHandler::init_actorMap() {
 	actorMap["eagle"] = new Eagle();
 }
-
-
-

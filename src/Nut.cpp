@@ -20,4 +20,3 @@ Nut::~Nut() {
 std::string Nut::get_name() {
 	return nutName;
 }
-
