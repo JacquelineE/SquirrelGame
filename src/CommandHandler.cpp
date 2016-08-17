@@ -17,12 +17,11 @@ namespace sgame {
 
 CommandHandler::CommandHandler() {
 	this->player = Squirrel();
-	this->logManager = LogisticManager(); //now the commandHandler can access environments
+	this->logManager = LogisticManager(); //now the commandHandler can know the tate of the game
 	init_environments();
 	std::cout << environmentMap.find(logManager.currEnvironment)->second->location() << std::endl;
 	init_actorMap();
 	std::cout << actorMap.find("Mr. Eagle")->second->name() << std::endl;
-	//player = Squirrel();
 }
 
 CommandHandler::CommandHandler(CommandHandler & ref) { //TODO MOVE!?
@@ -62,16 +61,10 @@ CommandHandler& CommandHandler::operator=(const CommandHandler& ref) { //TODO MO
 }
 
 void CommandHandler::write_output() {
-	std::cout << "You are in " << logManager.currEnvironment << ". Where do you want to go?" << std::endl;
-	std::cout << "OBS CANT DO THIS YET:";
-	for(std::map<std::string, Environment*>::iterator itr = environmentMap.begin(); itr != environmentMap.end(); itr++) {
-		std::cout << " " << itr->second->location();
-	}
-	std::cout << std::endl;
+	logManager.look(environmentMap);
 	std::cout  << "Be wise " << std::endl;
 	std::cout << " \n >";
 }
-
 
 void CommandHandler::read_input() {
 	std::string input;
@@ -102,7 +95,15 @@ void CommandHandler::read_input() {
 		}
 	} else if(cmd.compare("bag") == 0){
 		player.print_bag();
-	} else {
+	}
+	else if(cmd.compare("go") == 0){
+		itEnvironments = environmentMap.find(msg);
+		if (itEnvironments != environmentMap.end()) {
+			logManager.changeGameLocation(msg);
+		} else {
+			std::cout << "Where the hell is that?" << std::endl;
+		}
+	}else {
 		std::cout <<"You better try a valid command" << std::endl;
 	}
 
@@ -121,21 +122,23 @@ void CommandHandler::run() {
 
 void CommandHandler::print_intro() {
 	std::cout << "Welcome to decisio game, your choices will count!" << std::endl;
-	std::cout << "You must be the squirrel " << player.name() << "! Collect all the nuts" << std::endl;
-	std::cout << "for the winter, but beware of the dangerous predators..." << std::endl;
+	std::cout << "You must be the squirrel " << player.name() << "! Winter is coming..." << std::endl;
+	std::cout << "collect all the nuts to be prepared! But beware of the dangerous predators..." << std::endl;
 }
 
 void CommandHandler::init_actorMap() {
 	this->actorMap["Mr. Eagle"] = new Eagle("Mr. Eagle"); //Mem leak?
 }
 
-void CommandHandler::init_environments() { //bygg spelplanen
+void CommandHandler::init_environments() { //bygg spelplanen med environment object
 	std::string start = "OakForest1";
 	this->environmentMap[start] = new OakForest(start);
 	this->logManager.currEnvironment = start;
 	start = "PineForest1";
 	Environment * env2 = new PineForest("PineForest1");
 	environmentMap[env2->location()] = env2;
+	Environment * env3 = new PineForest("OakForest2");
+	environmentMap[env3->location()] = env3;
 }
 
 

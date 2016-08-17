@@ -33,12 +33,14 @@ private:
 
 	//Logistic Manager & environments
 	LogisticManager logManager;
+	std::map<std::string,Environment*>::iterator itEnvironments;
 	std::map<std::string, Environment*> environmentMap;
 
 	bool isRunning = true;
 
 	void print_intro();
 	void write_output();
+	void look();
 	void read_input();
 	void init_actorMap();
 	void init_environments();
