@@ -24,7 +24,6 @@ public:
 	LogisticManager(LogisticManager & ref);
 	virtual ~LogisticManager();
 	std::string currEnvironment;
-	std::map<std::string, Environment*> environmentMap;
 
 };
 

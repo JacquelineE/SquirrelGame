@@ -17,7 +17,7 @@ namespace sgame {
 class OakForest: public Forest {
 
 private:
-	std::string locationName;
+	//std::string locationName;
 	int acorn = 5;
 public:
 	OakForest();

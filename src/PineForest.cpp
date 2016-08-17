@@ -10,8 +10,12 @@
 namespace sgame {
 
 PineForest::PineForest() {
-	// TODO Auto-generated constructor stub
+	locationName = "defaultPineForest";
+	cones = 2;
+}
 
+PineForest::PineForest(std::string locName) : Forest(locName) { //set locname
+	//acorn = 5;
 }
 
 PineForest::~PineForest() {
@@ -19,7 +23,7 @@ PineForest::~PineForest() {
 }
 
 void PineForest::pick_nut() {
-
+	cones--;
 }
 
 }

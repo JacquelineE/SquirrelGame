@@ -8,7 +8,8 @@
 #include "commandHandler.hpp"
 #include "eagle.hpp"
 #include "squirrel.hpp"
-
+#include "oakForest.hpp"
+#include "pineForest.hpp"
 #include <iostream>
 #include <sstream>
 
@@ -17,13 +18,14 @@ namespace sgame {
 CommandHandler::CommandHandler() {
 	this->player = Squirrel();
 	this->logManager = LogisticManager(); //now the commandHandler can access environments
-	std::cout << logManager.environmentMap.find(logManager.currEnvironment)->second->location() << std::endl;
+	init_environments();
+	std::cout << environmentMap.find(logManager.currEnvironment)->second->location() << std::endl;
 	init_actorMap();
 	std::cout << actorMap.find("Mr. Eagle")->second->name() << std::endl;
 	//player = Squirrel();
 }
 
-CommandHandler::CommandHandler(CommandHandler & ref) {
+CommandHandler::CommandHandler(CommandHandler & ref) { //TODO MOVE!?
 	this->actorMap = ref.actorMap;
 	this->isRunning = ref.isRunning;
 	this->itActors = ref.itActors;
@@ -35,7 +37,7 @@ CommandHandler::CommandHandler(CommandHandler & ref) {
 
 CommandHandler::~CommandHandler() {
 	std::cout << "LOG DESTRUCT" << std::endl;
-	for(std::map<std::string, Environment*>::iterator itr = logManager.environmentMap.begin(); itr != logManager.environmentMap.end(); itr++) {
+	for(std::map<std::string, Environment*>::iterator itr = environmentMap.begin(); itr != environmentMap.end(); itr++) {
 		delete itr->second;
 	}
 	std::cout << "CMD DESTRUCT" << std::endl;
@@ -47,7 +49,7 @@ CommandHandler::~CommandHandler() {
 	}
 }
 
-CommandHandler& CommandHandler::operator=(const CommandHandler& ref) {
+CommandHandler& CommandHandler::operator=(const CommandHandler& ref) { //TODO MOVE!?
 	std::cerr << "copy =" << std::endl;
 	this->actorMap = ref.actorMap;
 	this->isRunning = ref.isRunning;
@@ -60,7 +62,12 @@ CommandHandler& CommandHandler::operator=(const CommandHandler& ref) {
 }
 
 void CommandHandler::write_output() {
-	std::cout << logManager.currEnvironment << std::endl;
+	std::cout << "You are in " << logManager.currEnvironment << ". Where do you want to go?" << std::endl;
+	std::cout << "OBS CANT DO THIS YET:";
+	for(std::map<std::string, Environment*>::iterator itr = environmentMap.begin(); itr != environmentMap.end(); itr++) {
+		std::cout << " " << itr->second->location();
+	}
+	std::cout << std::endl;
 	std::cout  << "Be wise " << std::endl;
 	std::cout << " \n >";
 }
@@ -119,7 +126,17 @@ void CommandHandler::print_intro() {
 }
 
 void CommandHandler::init_actorMap() {
-	actorMap["Mr. Eagle"] = new Eagle("Mr. Eagle"); //Mem leak?
+	this->actorMap["Mr. Eagle"] = new Eagle("Mr. Eagle"); //Mem leak?
 }
+
+void CommandHandler::init_environments() { //bygg spelplanen
+	std::string start = "OakForest1";
+	this->environmentMap[start] = new OakForest(start);
+	this->logManager.currEnvironment = start;
+	start = "PineForest1";
+	Environment * env2 = new PineForest("PineForest1");
+	environmentMap[env2->location()] = env2;
+}
+
 
 }

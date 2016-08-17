@@ -15,9 +15,10 @@ namespace sgame {
 class PineForest: public Forest {
 
 private:
-	int cones;
+	int cones = 2;
 public:
 	PineForest();
+	PineForest(std::string locName);
 	virtual ~PineForest();
 	virtual void pick_nut();
 };

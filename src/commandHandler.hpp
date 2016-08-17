@@ -13,6 +13,7 @@
 #include "item.hpp"
 #include "character.hpp"
 #include "squirrel.hpp"
+#include "environment.hpp"
 #include "logisticManager.hpp"
 
 namespace sgame {
@@ -30,8 +31,9 @@ private:
 	std::map<std::string, Character*> actorMap;
 	std::map<std::string, Item*> itemMap;
 
-	//Logistic Manager for environments
+	//Logistic Manager & environments
 	LogisticManager logManager;
+	std::map<std::string, Environment*> environmentMap;
 
 	bool isRunning = true;
 
@@ -39,6 +41,7 @@ private:
 	void write_output();
 	void read_input();
 	void init_actorMap();
+	void init_environments();
 
 public:
 	CommandHandler();
