@@ -20,7 +20,9 @@ public:
 	Forest();
 	Forest(std::string locName);
 	virtual ~Forest();
+
 	virtual void pick_nut() = 0;
+	virtual void place_items() = 0;
 
 };
 

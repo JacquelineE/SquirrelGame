@@ -15,11 +15,9 @@ namespace sgame {
 
 class Nut: public Item {
 private:
-	std::string nutName;
 public:
 	Nut();
 	virtual ~Nut();
-	virtual std::string get_name();
 };
 
 }

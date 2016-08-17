@@ -11,7 +11,9 @@
 #ifndef ENVIRONMENT_HPP_
 #define ENVIRONMENT_HPP_
 
+#include "item.hpp"
 #include <string>
+#include <vector>
 
 namespace sgame {
 
@@ -20,6 +22,7 @@ class Environment {
 
 protected:
 	std::string locationName;
+	std::vector<Item*> items;
 
 public:
 	Environment();
@@ -27,6 +30,8 @@ public:
 	virtual ~Environment();
 
 	std::string location() const; //return name of location
+	virtual void place_items() = 0;
+	void print_items();
 };
 
 }

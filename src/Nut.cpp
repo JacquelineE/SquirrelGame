@@ -10,17 +10,11 @@
 namespace sgame {
 
 Nut::Nut() {
-	nutName = "nut";
-	// TODO Auto-generated constructor stub
-
+	name = "nut";
 }
 
 Nut::~Nut() {
 	// TODO Auto-generated destructor stub
-}
-
-std::string Nut::get_name() {
-	return nutName;
 }
 
 }

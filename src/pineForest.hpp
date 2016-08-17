@@ -20,7 +20,9 @@ public:
 	PineForest();
 	PineForest(std::string locName);
 	virtual ~PineForest();
+
 	virtual void pick_nut();
+	virtual void place_items();
 };
 
 }

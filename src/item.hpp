@@ -13,11 +13,14 @@
 namespace sgame {
 
 class Item {
+protected:
+	std::string name;
 
 public:
 	Item();
 	virtual ~Item();
-	virtual std::string get_name() = 0;
+
+	std::string get_name();
 };
 
 }

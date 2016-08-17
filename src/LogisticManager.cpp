@@ -18,9 +18,18 @@ LogisticManager::LogisticManager(LogisticManager & ref) {
 }
 
 //var är spelet?
-void LogisticManager::look(std::map<std::string, Environment*> environmentMap) { //cant be const?
-	std::cout << "You are in " << currEnvironment << ". Where do you want to go?" << std::endl;
-	std::cout << "OBS CANT DO THIS YET:";
+void LogisticManager::look(std::map<std::string, Environment*> & environmentMap) { //cant be const?
+	std::cout << "You are in " << currEnvironment << "." << std::endl;
+
+	//look for items in each environment
+	std::map<std::string, Environment*>::iterator itr = environmentMap.find(currEnvironment);
+	if(itr != environmentMap.end()) {
+		(itr -> second)->print_items();
+	}
+	std::cout << std::endl;
+
+	//look where to go
+	std::cout << "Where do you want to go?";
 	for(std::map<std::string, Environment*>::iterator itr = environmentMap.begin(); itr != environmentMap.end(); itr++) {
 		if(itr->first.compare(currEnvironment) != 0) {
 			std::cout << " " << itr->second->location();

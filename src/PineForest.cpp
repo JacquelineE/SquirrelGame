@@ -6,6 +6,10 @@
  */
 
 #include "pineForest.hpp"
+#include "nut.hpp"
+#include <iostream>
+
+using namespace std;
 
 namespace sgame {
 
@@ -14,16 +18,23 @@ PineForest::PineForest() {
 	cones = 2;
 }
 
-PineForest::PineForest(std::string locName) : Forest(locName) { //set locname
-	//acorn = 5;
+PineForest::PineForest(std::string locName) { //set locname
+	this->locationName = locName;
+	place_items();
 }
 
 PineForest::~PineForest() {
-	// TODO Auto-generated destructor stub
+	for(std::vector<Item*>::iterator itr = items.begin(); itr != items.end(); itr++) {
+		delete (*itr);
+	}
 }
 
 void PineForest::pick_nut() {
 	cones--;
+}
+
+void PineForest::place_items() {
+	items.push_back(new Nut());
 }
 
 }

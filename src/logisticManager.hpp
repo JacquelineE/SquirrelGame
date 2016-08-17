@@ -25,7 +25,7 @@ public:
 	virtual ~LogisticManager();
 	std::string currEnvironment;
 
-	void look(std::map<std::string, Environment*> environmentMap);
+	void look(std::map<std::string, Environment*> & environmentMap);
 	void changeGameLocation(std::string const location);
 
 };

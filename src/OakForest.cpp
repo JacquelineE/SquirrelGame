@@ -6,24 +6,36 @@
  */
 
 #include "oakForest.hpp"
+#include "nut.hpp"
+#include <iostream>
+using namespace std;
 
 namespace sgame {
 
 OakForest::OakForest() {
 	locationName = "defaultOakForest";
-	acorn = 5;
 }
 
-OakForest::OakForest(std::string locName) : Forest(locName) { //set locname
-	//acorn = 5;
+OakForest::OakForest(std::string locName) { //set locname
+	this->locationName = locName;
+	place_items();
 }
 
 OakForest::~OakForest() {
-	// TODO Auto-generated destructor stub
+	for(std::vector<Item*>::iterator itr = items.begin(); itr != items.end(); itr++) {
+		delete (*itr);
+	}
 }
 
 void OakForest::pick_nut() {
 	acorn--;
+}
+
+void OakForest::place_items() {
+	//	Nut n;
+	//	items.push_back(n);
+	items.push_back(new Nut());
+	items.push_back(new Nut());
 }
 
 }

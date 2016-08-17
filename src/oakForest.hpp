@@ -23,7 +23,9 @@ public:
 	OakForest();
 	OakForest(std::string locName);
 	virtual ~OakForest();
+
 	virtual void pick_nut();
+	virtual void place_items();
 };
 
 }
