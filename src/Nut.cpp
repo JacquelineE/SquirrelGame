@@ -7,6 +7,8 @@
 
 #include "nut.hpp"
 
+namespace sgame {
+
 Nut::Nut() {
 	nutName = "nut";
 	// TODO Auto-generated constructor stub
@@ -19,4 +21,6 @@ Nut::~Nut() {
 
 std::string Nut::get_name() {
 	return nutName;
+}
+
 }

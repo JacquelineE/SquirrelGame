@@ -10,17 +10,24 @@
 
 #include <map>
 #include <string>
+#include <memory>
 #include "environment.hpp"
+
+namespace sgame {
+
 class LogisticManager {
 
 private:
 	void init_environments();
 public:
 	LogisticManager();
+	LogisticManager(LogisticManager & ref);
 	virtual ~LogisticManager();
 	std::string currEnvironment;
-	std::map<std::string, Environment *> environmentMap;
+	std::map<std::string, Environment*> environmentMap;
 
 };
+
+}
 
 #endif /* LOGISTICMANAGER_HPP_ */

@@ -7,6 +7,8 @@
 
 #include "pineForest.hpp"
 
+namespace sgame {
+
 PineForest::PineForest() {
 	// TODO Auto-generated constructor stub
 
@@ -17,5 +19,7 @@ PineForest::~PineForest() {
 }
 
 void PineForest::pick_nut() {
+
+}
 
 }

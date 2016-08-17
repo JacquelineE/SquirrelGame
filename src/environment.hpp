@@ -13,6 +13,8 @@
 
 #include <string>
 
+namespace sgame {
+
 class Environment {
 	//vector with neighbors? static linked list?
 
@@ -21,11 +23,12 @@ protected:
 
 public:
 	Environment();
+	Environment(std::string);
 	virtual ~Environment();
 
 	std::string location() const; //return name of location
 };
 
-
+}
 
 #endif /* ENVIRONMENT_HPP_ */

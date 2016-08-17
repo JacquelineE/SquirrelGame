@@ -10,6 +10,8 @@
 
 #include "forest.hpp"
 
+namespace sgame {
+
 class PineForest: public Forest {
 
 private:
@@ -19,5 +21,7 @@ public:
 	virtual ~PineForest();
 	virtual void pick_nut();
 };
+
+}
 
 #endif /* PINEFOREST_HPP_ */

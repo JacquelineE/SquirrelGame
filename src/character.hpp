@@ -10,6 +10,8 @@
 
 #include <string>
 
+namespace sgame {
+
 class Character {
 protected:
 	int health;
@@ -22,7 +24,7 @@ public:
 	Character();
 	virtual ~Character();
 
-	void name();
+	virtual std::string name() const = 0;
 	virtual void type() const = 0;
 	virtual void action() = 0;
 	void attack(Character &);
@@ -33,5 +35,7 @@ public:
 
 
 };
+
+}
 
 #endif /* CHARACTER_HPP_ */

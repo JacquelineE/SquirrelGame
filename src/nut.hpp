@@ -11,6 +11,8 @@
 #include "item.hpp"
 #include <string>
 
+namespace sgame {
+
 class Nut: public Item {
 private:
 	std::string nutName;
@@ -19,5 +21,7 @@ public:
 	virtual ~Nut();
 	virtual std::string get_name();
 };
+
+}
 
 #endif /* NUT_HPP_ */

@@ -9,6 +9,9 @@
 #define ITEM_HPP_
 
 #include <string>
+
+namespace sgame {
+
 class Item {
 
 public:
@@ -16,5 +19,7 @@ public:
 	virtual ~Item();
 	virtual std::string get_name() = 0;
 };
+
+}
 
 #endif /* ITEM_HPP_ */

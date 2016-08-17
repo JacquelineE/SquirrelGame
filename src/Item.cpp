@@ -7,6 +7,8 @@
 
 #include "item.hpp"
 
+namespace sgame {
+
 Item::Item() {
 	// TODO Auto-generated constructor stub
 
@@ -14,4 +16,6 @@ Item::Item() {
 
 Item::~Item() {
 	// TODO Auto-generated destructor stub
+}
+
 }

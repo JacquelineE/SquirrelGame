@@ -7,10 +7,14 @@
 
 #include "environment.hpp"
 
+namespace sgame {
 
 Environment::Environment() {
 
+}
 
+Environment::Environment(std::string locName) {
+	this->locationName = locName;
 }
 
 Environment::~Environment() {
@@ -19,4 +23,6 @@ Environment::~Environment() {
 
 std::string Environment::location() const {
 	return locationName;
+}
+
 }

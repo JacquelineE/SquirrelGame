@@ -12,9 +12,12 @@
 #include "item.hpp"
 #include <map>
 
+namespace sgame {
+
 class Squirrel: public Character {
 
 private:
+	std::string nickName;
 	int nuts;
 	std::map<std::string, int> bag;
 	std::map<std::string, int>::const_iterator bagIterator;
@@ -22,11 +25,15 @@ private:
 public:
 	Squirrel();
 	virtual ~Squirrel();
+
+	virtual std::string name() const;
 	virtual void type() const;
 	virtual void action();
 	void pick(Item &);
 	void change_nr_nuts(int n);
 	void print_bag();
 };
+
+}
 
 #endif /* SQUIRREL_HPP_ */

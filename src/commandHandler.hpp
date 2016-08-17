@@ -13,6 +13,9 @@
 #include "item.hpp"
 #include "character.hpp"
 #include "squirrel.hpp"
+#include "logisticManager.hpp"
+
+namespace sgame {
 
 //typedef void (CommandHandler::*cmd_pointer)(std::string &);
 
@@ -20,13 +23,15 @@ class CommandHandler {
 
 private:
 
+	//Characters & Items
 	std::map<std::string,Character*>::iterator itActors;
-	std::map<std::string,Item*>::iterator itItems;
-
-	Squirrel * player;
-
+	std::map<std::string,Item*>::iterator itItems; //TODO flytta items till environment?
+	Squirrel player;
 	std::map<std::string, Character*> actorMap;
 	std::map<std::string, Item*> itemMap;
+
+	//Logistic Manager for environments
+	LogisticManager logManager;
 
 	bool isRunning = true;
 
@@ -37,9 +42,14 @@ private:
 
 public:
 	CommandHandler();
+	CommandHandler(CommandHandler & ref);
 	virtual ~CommandHandler();
 	void run();
 
+	CommandHandler& operator=(const CommandHandler& ref);
+
 };
+
+}
 
 #endif /* SRC_COMMANDHANDLER_HPP_ */

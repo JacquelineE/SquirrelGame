@@ -7,6 +7,8 @@
 
 #include "slingshot.hpp"
 
+namespace sgame {
+
 Slingshot::Slingshot() {
 	name = "slingshot";
 	// TODO Auto-generated constructor stub
@@ -19,4 +21,6 @@ Slingshot::~Slingshot() {
 
 std::string Slingshot::get_name() {
 	return name;
+}
+
 }

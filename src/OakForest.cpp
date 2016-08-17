@@ -7,10 +7,15 @@
 
 #include "oakForest.hpp"
 
-OakForest::OakForest() {
-	locationName = "OakForest";
-	acorn = 10;
+namespace sgame {
 
+OakForest::OakForest() {
+	locationName = "defaultOakForest";
+	acorn = 5;
+}
+
+OakForest::OakForest(std::string locName) : Forest(locName) { //set locname
+	//acorn = 5;
 }
 
 OakForest::~OakForest() {
@@ -21,4 +26,4 @@ void OakForest::pick_nut() {
 	acorn--;
 }
 
-
+}

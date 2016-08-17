@@ -12,14 +12,20 @@
 #include "forest.hpp"
 #include <string>
 
+namespace sgame {
+
 class OakForest: public Forest {
 
 private:
-	int acorn;
+	std::string locationName;
+	int acorn = 5;
 public:
 	OakForest();
+	OakForest(std::string locName);
 	virtual ~OakForest();
 	virtual void pick_nut();
 };
+
+}
 
 #endif /* OAKFOREST_HPP_ */

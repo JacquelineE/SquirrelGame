@@ -9,11 +9,12 @@
 #include <iostream>
 #include "commandHandler.hpp"
 using namespace std;
+using namespace sgame;
 
 int main() {
 
 
-	CommandHandler * cmd = new CommandHandler();
-	cmd->run();
+	CommandHandler cmd;
+	cmd.run();
 	return 0;
 }

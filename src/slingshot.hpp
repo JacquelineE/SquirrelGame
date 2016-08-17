@@ -11,6 +11,8 @@
 #include "item.hpp"
 #include <string>
 
+namespace sgame {
+
 class Slingshot : public Item {
 	std::string name;
 public:
@@ -18,5 +20,7 @@ public:
 	virtual ~Slingshot();
 	std::string get_name();
 };
+
+}
 
 #endif /* SLINGSHOT_HPP_ */
