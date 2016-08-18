@@ -32,8 +32,6 @@ void OakForest::pick_nut() {
 }
 
 void OakForest::place_items() {
-	//	Nut n;
-	//	items.push_back(n);
 	this->items.push_back(new Nut());
 	this->items.push_back(new Nut());
 }

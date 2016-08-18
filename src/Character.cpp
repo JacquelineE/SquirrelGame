@@ -11,7 +11,6 @@
 namespace sgame {
 
 Character::Character() {
-	std::cout << "abstract constructor" << std::endl;
 	health = 5;
 	startHealth = health;
 }

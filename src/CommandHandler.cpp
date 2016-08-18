@@ -21,9 +21,7 @@ CommandHandler::CommandHandler() {
 	this->totalNumberOfNuts = 0;
 	this->logManager = LogisticManager(); //now the commandHandler can know the state of the game
 	init_environments();
-	std::cout << environmentMap.find(logManager.currEnvironment)->second->location() << std::endl;
 	init_actorMap();
-	std::cout << eagleMap.find("Mr.Eagle")->second->name() << std::endl;
 }
 
 CommandHandler::CommandHandler(CommandHandler & ref) { //TODO MOVE!?
@@ -46,7 +44,6 @@ CommandHandler::~CommandHandler() {
 }
 
 CommandHandler& CommandHandler::operator=(const CommandHandler& ref) { //TODO MOVE!?
-	std::cerr << "copy =" << std::endl;
 	this->eagleMap = ref.eagleMap;
 	this->isRunning = ref.isRunning;
 	this->itEagles = ref.itEagles;
@@ -137,7 +134,6 @@ void CommandHandler::run() {
 	while(isRunning) {
 		write_output();
 		read_input();
-		std::cout << "total nuts: " << totalNumberOfNuts << std::endl;
 		if (0 == totalNumberOfNuts) {
 			std::cout << "YOU WON WITH " << player.nr_of_nuts() << " NUTS!" << std::endl;
 			isRunning = false;
