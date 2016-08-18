@@ -12,9 +12,8 @@ namespace sgame {
 
 Character::Character() {
 	std::cout << "abstract constructor" << std::endl;
-	age = 5;
-	health = 10;
-	hasTreasure = false;
+	health = 5;
+	startHealth = health;
 }
 
 Character::~Character() {}
@@ -27,8 +26,12 @@ int Character::get_health() const {
 	return health;
 }
 
-void attack(Character & character) {
+void Character::attack(Character & character) {
 	character.set_health(-1);
+}
+
+std::string Character::characterLocation() const {
+	return location;
 }
 
 }

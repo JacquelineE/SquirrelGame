@@ -18,7 +18,7 @@ OakForest::OakForest() {
 
 OakForest::OakForest(std::string locName) { //set locname
 	this->locationName = locName;
-	place_items();
+	this->place_items();
 }
 
 OakForest::~OakForest() {
@@ -34,8 +34,8 @@ void OakForest::pick_nut() {
 void OakForest::place_items() {
 	//	Nut n;
 	//	items.push_back(n);
-	items.push_back(new Nut());
-	items.push_back(new Nut());
+	this->items.push_back(new Nut());
+	this->items.push_back(new Nut());
 }
 
 }

@@ -32,6 +32,8 @@ public:
 	std::string location() const; //return name of location
 	virtual void place_items() = 0;
 	void print_items();
+	bool try_pick_item(std::string name);
+	int get_number_of_nuts();
 };
 
 }

@@ -28,10 +28,13 @@ public:
 
 	virtual std::string name() const;
 	virtual void type() const;
-	virtual void action();
-	void pick(Item &);
+	virtual void action(std::string location, int locationCount);
+	void pick(std::string itemName);
 	void change_nr_nuts(int n);
 	void print_bag();
+	void move(std::string locationName);
+	int nr_of_nuts() const;
+	virtual int strength();
 };
 
 }

@@ -15,13 +15,14 @@ namespace sgame {
 class Eagle: public Character {
 public:
 	Eagle();
-	Eagle(std::string name);
+	Eagle(std::string name, std::string startLocation);
 	Eagle(Eagle const & ref);
 	virtual ~Eagle();
 
 	virtual std::string name() const;
 	virtual void type() const;
-	virtual void action();
+	virtual void action(std::string location, int moveOptions);
+	virtual int strength();
 
 };
 

@@ -44,7 +44,32 @@ void Environment::print_items() {
 	}
 	if((nutCount > 0) || (slingshotCount > 0)) {
 		cout << " " << nutCount << " nuts and " << slingshotCount << " slingshots.";
+	} else {
+		cout << "nothing." << endl;
 	}
+}
+
+bool Environment::try_pick_item(std::string name) {
+	vector<Item*>::iterator iter;
+	for(iter = this->items.begin(); iter != this->items.end(); iter++) {
+		if((*iter)->get_name().compare(name) == 0) {
+			delete (*iter);		//delete item
+			this->items.erase(iter);	//erase pointer
+			return true;
+		}
+	}
+	return false;
+}
+
+int Environment::get_number_of_nuts() {
+	int nuts = 0;
+	vector<Item*>::iterator iter;
+	for (iter = items.begin(); iter != items.end(); iter++) {
+		if ((*iter)->get_name().compare("nut") == 0) {
+			++nuts;
+		}
+	}
+	return nuts;
 }
 
 }

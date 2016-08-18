@@ -12,24 +12,24 @@
 #include "pineForest.hpp"
 #include <iostream>
 #include <sstream>
+#include <typeinfo>
 
 namespace sgame {
 
 CommandHandler::CommandHandler() {
 	this->player = Squirrel();
+	this->totalNumberOfNuts = 0;
 	this->logManager = LogisticManager(); //now the commandHandler can know the tate of the game
 	init_environments();
 	std::cout << environmentMap.find(logManager.currEnvironment)->second->location() << std::endl;
 	init_actorMap();
-	std::cout << actorMap.find("Mr. Eagle")->second->name() << std::endl;
+	std::cout << eagleMap.find("Mr.Eagle")->second->name() << std::endl;
 }
 
 CommandHandler::CommandHandler(CommandHandler & ref) { //TODO MOVE!?
-	this->actorMap = ref.actorMap;
+	this->eagleMap = ref.eagleMap;
 	this->isRunning = ref.isRunning;
-	this->itActors = ref.itActors;
-	this->itItems = ref.itItems; //TODO flytta items till environment?
-	this->itemMap = ref.itemMap;
+	this->itEagles = ref.itEagles;
 	this->logManager = ref.logManager;
 	this->player = ref.player;
 }
@@ -40,27 +40,28 @@ CommandHandler::~CommandHandler() {
 		delete itr->second;
 	}
 	std::cout << "CMD DESTRUCT" << std::endl;
-	for(std::map<std::string, Character*>::iterator itr = actorMap.begin(); itr != actorMap.end(); itr++) {
-		delete itr->second;
-	}
-	for(std::map<std::string, Item*>::iterator itr = itemMap.begin(); itr != itemMap.end(); itr++) {
+	for(std::map<std::string, Eagle*>::iterator itr = eagleMap.begin(); itr != eagleMap.end(); itr++) {
 		delete itr->second;
 	}
 }
 
 CommandHandler& CommandHandler::operator=(const CommandHandler& ref) { //TODO MOVE!?
 	std::cerr << "copy =" << std::endl;
-	this->actorMap = ref.actorMap;
+	this->eagleMap = ref.eagleMap;
 	this->isRunning = ref.isRunning;
-	this->itActors = ref.itActors;
-	this->itItems = ref.itItems; //TODO flytta items till environment?
-	this->itemMap = ref.itemMap;
+	this->itEagles = ref.itEagles;
 	this->logManager = ref.logManager;
 	this->player = ref.player;
 	return *this;
 }
 
 void CommandHandler::write_output() {
+	for(std::map<std::string, Eagle*>::iterator itr = eagleMap.begin(); itr != eagleMap.end(); itr++) {
+		if (itr->second->characterLocation().compare(logManager.currEnvironment) == 0) {
+			std::cout << "You see " << itr->second->name() << " in " << itr->second->characterLocation() << std::endl;
+		}
+	}
+
 	logManager.look(environmentMap);
 	std::cout  << "Be wise " << std::endl;
 	std::cout << " \n >";
@@ -77,21 +78,41 @@ void CommandHandler::read_input() {
 
 	if(cmd.compare("attack") == 0) {
 		std::cout << "You attacked " << msg << std::endl;
-		itActors = actorMap.find(msg);
-		if(itActors != actorMap.end()) {
-			(itActors -> second)->set_health(-1);
+		itEagles = eagleMap.find(msg);
+		if (player.nr_of_nuts() < 1) {
+			std::cout << "You don't have nuts." << std::endl;
+		}
+		else if (itEagles != eagleMap.end()) {
 			player.change_nr_nuts(-1);
+			if (itEagles->second->characterLocation().compare(logManager.currEnvironment) == 0) {
+				(itEagles -> second)->set_health(-(player.strength()));
+				if (itEagles->second->get_health() < 1) {
+					delete (itEagles->second);
+					eagleMap.erase(itEagles);
+					std::cout << "You defeated " << msg << std::endl;
+				} else {
+					std::cout << msg << " got health " << itEagles->second->get_health() << std::endl;
+				}
+			} else {
+				std::cout << msg << "is not here!" << std::endl;
+			}
 		} else {
+			player.change_nr_nuts(-1);
 			std::cout << "You better save your nuts for real enemies" << std::endl;
 		}
 	} else if(cmd.compare("pick") == 0) {
 		std::cout << "will pick" << msg << std::endl;
-		itItems = itemMap.find(msg);
-
-		if(itItems != itemMap.end()) {
-			player.pick((*(itItems -> second)));
-		} else {
-			std::cout << "Try pick something else!" << std::endl;
+		itEnvironments = environmentMap.find(logManager.currEnvironment);
+		if (itEnvironments != environmentMap.end()) {
+			//try to remove item from environment
+			if ((itEnvironments->second)->try_pick_item(msg)) {
+				player.pick(msg);
+				if (msg.compare("nut") == 0) {
+					this->totalNumberOfNuts--;
+				}
+			} else {
+				std::cout << "Try pick something else!" << std::endl;
+			}
 		}
 	} else if(cmd.compare("bag") == 0){
 		player.print_bag();
@@ -100,6 +121,7 @@ void CommandHandler::read_input() {
 		itEnvironments = environmentMap.find(msg);
 		if (itEnvironments != environmentMap.end()) {
 			logManager.changeGameLocation(msg);
+			player.move(msg);
 		} else {
 			std::cout << "Where the hell is that?" << std::endl;
 		}
@@ -112,11 +134,45 @@ void CommandHandler::read_input() {
 void CommandHandler::run() {
 	print_intro();
 
-	int i = 3;
+	int i = 16;
 	while(i > 0) { //isRunning
 		write_output();
 		read_input();
+		std::cout << "total nuts: " << totalNumberOfNuts << std::endl;
+		if (0 == totalNumberOfNuts) {
+			std::cout << "YOU WON WITH " << player.nr_of_nuts() << " NUTS!" << std::endl;
+			isRunning = false;
+			i=0;
+			break;
+		}
+
+		other_characters_action();
+
+		if (player.get_health() < 1) {
+			std::cout << "Oh no you died! GAME OVER" << std::endl;
+			isRunning = false;
+			i=0;
+			break;
+		}
 		i--;
+	}
+}
+
+void CommandHandler::other_characters_action() {
+	eagles_action();
+}
+
+void CommandHandler::eagles_action() {
+	for(std::map<std::string, Eagle*>::iterator itr = eagleMap.begin(); itr != eagleMap.end(); itr++) {
+		if (itr->second->characterLocation().compare(logManager.currEnvironment) == 0) {
+			int option = (rand() % 2); //0-(loc-1)
+			if (option == 0) {
+				player.set_health(-(itr->second->strength()));
+				std::cout << itr->second->name() << " attacked you! Health is now " << player.get_health() << std::endl;
+				return;
+			}
+		}
+		itr->second->action(logManager.currEnvironment, environmentMap.size());
 	}
 }
 
@@ -127,18 +183,25 @@ void CommandHandler::print_intro() {
 }
 
 void CommandHandler::init_actorMap() {
-	this->actorMap["Mr. Eagle"] = new Eagle("Mr. Eagle"); //Mem leak?
+	this->eagleMap["Mr.Eagle"] = new Eagle("Mr.Eagle", "PineForest1"); //Mem leak?
+	this->eagleMap["Eagleius"] = new Eagle("Eagleius", "PineForest1");
 }
 
+std::string CommandHandler::environmentNames[3] = {"OakForest1", "PineForest1", "OakForest2"};
+
 void CommandHandler::init_environments() { //bygg spelplanen med environment object
-	std::string start = "OakForest1";
+	std::string start = environmentNames[0];
 	this->environmentMap[start] = new OakForest(start);
 	this->logManager.currEnvironment = start;
-	start = "PineForest1";
-	Environment * env2 = new PineForest("PineForest1");
+	Environment * env2 = new PineForest(environmentNames[1]);
 	environmentMap[env2->location()] = env2;
-	Environment * env3 = new PineForest("OakForest2");
+	Environment * env3 = new OakForest(environmentNames[2]);
 	environmentMap[env3->location()] = env3;
+
+	for(std::map<std::string, Environment*>::iterator itr = environmentMap.begin(); itr != environmentMap.end(); itr++) {
+		this->totalNumberOfNuts += itr->second->get_number_of_nuts();
+	}
+	std::cout << "Total number of nuts: " << totalNumberOfNuts << std::endl;
 }
 
 

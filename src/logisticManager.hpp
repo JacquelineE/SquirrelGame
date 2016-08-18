@@ -12,6 +12,7 @@
 #include <string>
 #include <memory>
 #include "environment.hpp"
+#include "eagle.hpp"
 
 namespace sgame {
 

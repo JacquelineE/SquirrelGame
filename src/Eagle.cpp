@@ -6,20 +6,22 @@
  */
 
 #include "eagle.hpp"
+#include "commandhandler.hpp"
+#include <cstdlib>
 #include <iostream>
 
 namespace sgame {
 
 Eagle::Eagle() {
-	//vector with items
-	nickName = "Default Eagle";
+	nickName = "DefaultEagle";
 
 }
 
-Eagle::Eagle(std::string name) {
-	//vector with items
+Eagle::Eagle(std::string name, std::string startLocation) {
 	nickName = name;
-
+	location = startLocation;
+	health = 5;
+	startHealth = health;
 }
 
 Eagle::Eagle(Eagle const & ref) : Character(ref){ }
@@ -36,8 +38,17 @@ void Eagle::type() const {
 	std::cout << "eagle" << std::endl;
 }
 
-void Eagle::action() {
-	std:: cout << "action" << std::endl;
+void Eagle::action(std::string location, int moveOptions) {
+	int option = (rand() % moveOptions); //0-(loc-1)
+	this->location = CommandHandler::environmentNames[option];
+}
+
+int Eagle::strength() {
+	if (health == startHealth) {
+		return 2;
+	} else {
+		return 1;
+	}
 }
 
 }

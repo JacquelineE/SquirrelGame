@@ -7,6 +7,7 @@
 
 #include "pineForest.hpp"
 #include "nut.hpp"
+#include "slingshot.hpp"
 #include <iostream>
 
 using namespace std;
@@ -35,6 +36,7 @@ void PineForest::pick_nut() {
 
 void PineForest::place_items() {
 	items.push_back(new Nut());
+	items.push_back(new Slingshot());
 }
 
 }

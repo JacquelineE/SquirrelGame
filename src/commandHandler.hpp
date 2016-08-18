@@ -11,7 +11,7 @@
 #include <map>
 #include <functional>
 #include "item.hpp"
-#include "character.hpp"
+#include "eagle.hpp"
 #include "squirrel.hpp"
 #include "environment.hpp"
 #include "logisticManager.hpp"
@@ -24,12 +24,10 @@ class CommandHandler {
 
 private:
 
-	//Characters & Items
-	std::map<std::string,Character*>::iterator itActors;
-	std::map<std::string,Item*>::iterator itItems; //TODO flytta items till environment?
+	//Characters
+	std::map<std::string,Eagle*>::iterator itEagles;
+	std::map<std::string, Eagle*> eagleMap;
 	Squirrel player;
-	std::map<std::string, Character*> actorMap;
-	std::map<std::string, Item*> itemMap;
 
 	//Logistic Manager & environments
 	LogisticManager logManager;
@@ -37,6 +35,7 @@ private:
 	std::map<std::string, Environment*> environmentMap;
 
 	bool isRunning = true;
+	int totalNumberOfNuts;
 
 	void print_intro();
 	void write_output();
@@ -44,11 +43,16 @@ private:
 	void read_input();
 	void init_actorMap();
 	void init_environments();
+	void other_characters_action();
+	void eagles_action();
 
 public:
 	CommandHandler();
 	CommandHandler(CommandHandler & ref);
 	virtual ~CommandHandler();
+
+	static std::string environmentNames[3];
+
 	void run();
 
 	CommandHandler& operator=(const CommandHandler& ref);
