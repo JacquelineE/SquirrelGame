@@ -38,4 +38,8 @@ void OakForest::place_items() {
 	this->items.push_back(new Nut());
 }
 
+std::string OakForest::get_description() const {
+	return "Beautiful oaks! There must be lots of nuts here.";
+}
+
 }

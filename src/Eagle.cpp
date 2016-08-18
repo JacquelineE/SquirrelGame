@@ -6,7 +6,7 @@
  */
 
 #include "eagle.hpp"
-#include "commandhandler.hpp"
+#include "commandHandler.hpp"
 #include <cstdlib>
 #include <iostream>
 
@@ -14,7 +14,6 @@ namespace sgame {
 
 Eagle::Eagle() {
 	nickName = "DefaultEagle";
-
 }
 
 Eagle::Eagle(std::string name, std::string startLocation) {

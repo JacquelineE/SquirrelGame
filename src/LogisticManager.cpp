@@ -13,18 +13,21 @@ namespace sgame {
 LogisticManager::LogisticManager() { }
 
 LogisticManager::LogisticManager(LogisticManager & ref) {
-	std::cout << "copy logmanager" << std::endl;
 	this->currEnvironment = ref.currEnvironment;
 }
 
 //var är spelet?
 void LogisticManager::look(std::map<std::string, Environment*> & environmentMap) { //cant be const?
 	std::cout << "You are in " << currEnvironment << "." << std::endl;
+	std::map<std::string,Environment*>::iterator iter = environmentMap.find(currEnvironment);
+	if (iter != environmentMap.end()) {
+		iter->second->desc();
+	}
 
-	//look for items in each environment
-	std::map<std::string, Environment*>::iterator itr = environmentMap.find(currEnvironment);
-	if(itr != environmentMap.end()) {
-		(itr -> second)->print_items();
+	//look for items in current environment
+	iter = environmentMap.find(currEnvironment);
+	if(iter != environmentMap.end()) {
+		(iter -> second)->print_items();
 	}
 	std::cout << std::endl;
 

@@ -72,4 +72,8 @@ int Environment::get_number_of_nuts() {
 	return nuts;
 }
 
+void Environment::desc() const {
+	cout << get_description() << endl;
+}
+
 }

@@ -26,6 +26,7 @@ public:
 
 	virtual void pick_nut();
 	virtual void place_items();
+	virtual std::string get_description() const;
 };
 
 }

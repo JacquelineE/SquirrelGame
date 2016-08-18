@@ -29,11 +29,13 @@ public:
 	Environment(std::string);
 	virtual ~Environment();
 
-	std::string location() const; //return name of location
+	std::string location() const;
 	virtual void place_items() = 0;
 	void print_items();
 	bool try_pick_item(std::string name);
 	int get_number_of_nuts();
+	virtual std::string get_description() const = 0;
+	void desc() const;
 };
 
 }

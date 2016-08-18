@@ -39,4 +39,8 @@ void PineForest::place_items() {
 	items.push_back(new Slingshot());
 }
 
+std::string PineForest::get_description() const {
+	return "Ah, the pine forest is green during the winter, maybe I should CHILL here then..";
+}
+
 }

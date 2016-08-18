@@ -19,7 +19,7 @@ namespace sgame {
 CommandHandler::CommandHandler() {
 	this->player = Squirrel();
 	this->totalNumberOfNuts = 0;
-	this->logManager = LogisticManager(); //now the commandHandler can know the tate of the game
+	this->logManager = LogisticManager(); //now the commandHandler can know the state of the game
 	init_environments();
 	std::cout << environmentMap.find(logManager.currEnvironment)->second->location() << std::endl;
 	init_actorMap();
@@ -134,27 +134,23 @@ void CommandHandler::read_input() {
 void CommandHandler::run() {
 	print_intro();
 
-	int i = 16;
-	while(i > 0) { //isRunning
+	while(isRunning) {
 		write_output();
 		read_input();
 		std::cout << "total nuts: " << totalNumberOfNuts << std::endl;
 		if (0 == totalNumberOfNuts) {
 			std::cout << "YOU WON WITH " << player.nr_of_nuts() << " NUTS!" << std::endl;
 			isRunning = false;
-			i=0;
-			break;
 		}
 
-		other_characters_action();
+		if (isRunning) {
+			other_characters_action();
 
-		if (player.get_health() < 1) {
-			std::cout << "Oh no you died! GAME OVER" << std::endl;
-			isRunning = false;
-			i=0;
-			break;
+			if (player.get_health() < 1) {
+				std::cout << "Oh no you died! GAME OVER" << std::endl;
+				isRunning = false;
+			}
 		}
-		i--;
 	}
 }
 
@@ -180,14 +176,18 @@ void CommandHandler::print_intro() {
 	std::cout << "Welcome to decisio game, your choices will count!" << std::endl;
 	std::cout << "You must be the squirrel " << player.name() << "! Winter is coming..." << std::endl;
 	std::cout << "collect all the nuts to be prepared! But beware of the dangerous predators..." << std::endl;
+	std::cout << "Pick up items with: pick <item>" << std::endl;
+	std::cout << "See what's in you bag: bag" << std::endl;
+	std::cout << "Attack others with: attack <name>" << std::endl;
+	std::cout << "Go to another part of the forest: go <location>" << std::endl << std::endl;
 }
 
 void CommandHandler::init_actorMap() {
-	this->eagleMap["Mr.Eagle"] = new Eagle("Mr.Eagle", "PineForest1"); //Mem leak?
-	this->eagleMap["Eagleius"] = new Eagle("Eagleius", "PineForest1");
+	this->eagleMap["Mr.Eagle"] = new Eagle("Mr.Eagle", "PineForest1");
+	this->eagleMap["Eagleius"] = new Eagle("Eagleius", "OakForest2");
 }
 
-std::string CommandHandler::environmentNames[3] = {"OakForest1", "PineForest1", "OakForest2"};
+std::string CommandHandler::environmentNames[4] = {"OakForest1", "PineForest1", "OakForest2", "PineForest2"};
 
 void CommandHandler::init_environments() { //bygg spelplanen med environment object
 	std::string start = environmentNames[0];
@@ -197,6 +197,8 @@ void CommandHandler::init_environments() { //bygg spelplanen med environment obj
 	environmentMap[env2->location()] = env2;
 	Environment * env3 = new OakForest(environmentNames[2]);
 	environmentMap[env3->location()] = env3;
+	Environment * env4 = new PineForest(environmentNames[3]);
+	environmentMap[env4->location()] = env4;
 
 	for(std::map<std::string, Environment*>::iterator itr = environmentMap.begin(); itr != environmentMap.end(); itr++) {
 		this->totalNumberOfNuts += itr->second->get_number_of_nuts();

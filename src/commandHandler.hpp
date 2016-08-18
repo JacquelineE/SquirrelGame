@@ -51,7 +51,7 @@ public:
 	CommandHandler(CommandHandler & ref);
 	virtual ~CommandHandler();
 
-	static std::string environmentNames[3];
+	static std::string environmentNames[4];
 
 	void run();
 
