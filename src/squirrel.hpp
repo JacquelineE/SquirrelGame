@@ -28,7 +28,7 @@ public:
 
 	virtual std::string name() const;
 	virtual void type() const;
-	virtual void action(std::string location, int locationCount);
+	virtual void action(std::string location, int moveOptions);
 	void pick(std::string itemName);
 	void change_nr_nuts(int n);
 	void print_bag();

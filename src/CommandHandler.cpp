@@ -25,9 +25,9 @@ CommandHandler::CommandHandler() {
 }
 
 CommandHandler::CommandHandler(CommandHandler & ref) { //TODO MOVE!?
-	this->eagleMap = ref.eagleMap;
+	this->characterMap = ref.characterMap;
 	this->isRunning = ref.isRunning;
-	this->itEagles = ref.itEagles;
+	this->itCharacters = ref.itCharacters;
 	this->logManager = ref.logManager;
 	this->player = ref.player;
 }
@@ -38,22 +38,22 @@ CommandHandler::~CommandHandler() {
 		delete itr->second;
 	}
 	std::cout << "CMD DESTRUCT" << std::endl;
-	for(std::map<std::string, Eagle*>::iterator itr = eagleMap.begin(); itr != eagleMap.end(); itr++) {
+	for(std::map<std::string, Character*>::iterator itr = characterMap.begin(); itr != characterMap.end(); itr++) {
 		delete itr->second;
 	}
 }
 
 CommandHandler& CommandHandler::operator=(const CommandHandler& ref) { //TODO MOVE!?
-	this->eagleMap = ref.eagleMap;
+	this->characterMap = ref.characterMap;
 	this->isRunning = ref.isRunning;
-	this->itEagles = ref.itEagles;
+	this->itCharacters = ref.itCharacters;
 	this->logManager = ref.logManager;
 	this->player = ref.player;
 	return *this;
 }
 
 void CommandHandler::write_output() {
-	for(std::map<std::string, Eagle*>::iterator itr = eagleMap.begin(); itr != eagleMap.end(); itr++) {
+	for(std::map<std::string, Character*>::iterator itr = characterMap.begin(); itr != characterMap.end(); itr++) {
 		if (itr->second->characterLocation().compare(logManager.currEnvironment) == 0) {
 			std::cout << "You see " << itr->second->name() << " in " << itr->second->characterLocation() << std::endl;
 		}
@@ -75,20 +75,20 @@ void CommandHandler::read_input() {
 
 	if(cmd.compare("attack") == 0) {
 		std::cout << "You attacked " << msg << std::endl;
-		itEagles = eagleMap.find(msg);
+		itCharacters = characterMap.find(msg);
 		if (player.nr_of_nuts() < 1) {
 			std::cout << "You don't have nuts." << std::endl;
 		}
-		else if (itEagles != eagleMap.end()) {
+		else if (itCharacters != characterMap.end()) {
 			player.change_nr_nuts(-1);
-			if (itEagles->second->characterLocation().compare(logManager.currEnvironment) == 0) {
-				(itEagles -> second)->set_health(-(player.strength()));
-				if (itEagles->second->get_health() < 1) {
-					delete (itEagles->second);
-					eagleMap.erase(itEagles);
+			if (itCharacters->second->characterLocation().compare(logManager.currEnvironment) == 0) {
+				(itCharacters -> second)->set_health(-(player.strength()));
+				if (itCharacters->second->get_health() < 1) {
+					delete (itCharacters->second);
+					characterMap.erase(itCharacters);
 					std::cout << "You defeated " << msg << std::endl;
 				} else {
-					std::cout << msg << " got health " << itEagles->second->get_health() << std::endl;
+					std::cout << msg << " got health " << itCharacters->second->get_health() << std::endl;
 				}
 			} else {
 				std::cout << msg << "is not here!" << std::endl;
@@ -155,16 +155,16 @@ void CommandHandler::other_characters_action() {
 }
 
 void CommandHandler::eagles_action() {
-	for(std::map<std::string, Eagle*>::iterator itr = eagleMap.begin(); itr != eagleMap.end(); itr++) {
+	for(std::map<std::string, Character*>::iterator itr = characterMap.begin(); itr != characterMap.end(); itr++) {
 		if (itr->second->characterLocation().compare(logManager.currEnvironment) == 0) {
 			int option = (rand() % 2); //0-(loc-1)
 			if (option == 0) {
-				player.set_health(-(itr->second->strength()));
+				player.set_health(-(itr->second->strength_character()));
 				std::cout << itr->second->name() << " attacked you! Health is now " << player.get_health() << std::endl;
 				return;
 			}
 		}
-		itr->second->action(logManager.currEnvironment, environmentMap.size());
+		itr->second->action_character(logManager.currEnvironment, environmentMap.size());
 	}
 }
 
@@ -179,8 +179,8 @@ void CommandHandler::print_intro() {
 }
 
 void CommandHandler::init_actorMap() {
-	this->eagleMap["Mr.Eagle"] = new Eagle("Mr.Eagle", "PineForest1");
-	this->eagleMap["Eagleius"] = new Eagle("Eagleius", "OakForest2");
+	this->characterMap["Mr.Eagle"] = new Eagle("Mr.Eagle", "PineForest1");
+	this->characterMap["Eagleius"] = new Eagle("Eagleius", "OakForest2");
 }
 
 std::string CommandHandler::environmentNames[4] = {"OakForest1", "PineForest1", "OakForest2", "PineForest2"};

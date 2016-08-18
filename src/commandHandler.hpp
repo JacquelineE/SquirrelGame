@@ -25,8 +25,8 @@ class CommandHandler {
 private:
 
 	//Characters
-	std::map<std::string,Eagle*>::iterator itEagles;
-	std::map<std::string, Eagle*> eagleMap;
+	std::map<std::string,Character*>::iterator itCharacters;
+	std::map<std::string, Character*> characterMap;
 	Squirrel player;
 
 	//Logistic Manager & environments

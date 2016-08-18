@@ -25,14 +25,16 @@ public:
 
 	virtual std::string name() const = 0;
 	virtual void type() const = 0;
-	virtual void action(std::string location, int locationCount) = 0;
 	void attack(Character &);
+	virtual void action(std::string location, int moveOptions) = 0;
 	//virtual std::string pick(const Item& item) const = 0;
 	//virtual std::string drop(const Item& item) const = 0;
 	void set_health(int);
 	int get_health()const;
 	std::string characterLocation() const;
 	virtual int strength() = 0;
+	int strength_character();
+	void action_character(std::string location, int moveOptions);
 
 
 };

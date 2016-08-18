@@ -33,4 +33,12 @@ std::string Character::characterLocation() const {
 	return location;
 }
 
+int Character::strength_character() {
+	return strength();
+}
+
+void Character::action_character(std::string location, int moveOptions) {
+	action(location, moveOptions);
+}
+
 }
